@@ -34,7 +34,7 @@ SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = true
 SWEP.AutoSpawnable = false
 
-SWEP.CanBuy = {ROLE_TRAITOR}
+SWEP.CanBuy = {ROLE_DETECTIVE}
 
 SWEP.LimitedStock = true
 SWEP.AllowDrop = true
