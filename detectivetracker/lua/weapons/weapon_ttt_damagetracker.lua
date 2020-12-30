@@ -97,7 +97,6 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	PrintTable( hook.GetTable() )
 	if SERVER and (trackedply ~= nil and trackerply ~= nil) and (PlayerWithinBounds(trackerply,trackedply,100)) then
 		if (table.IsEmpty(attackers)) then
 			trackerply:PrintMessage(HUD_PRINTTALK, "This player didn't receive damage from other players")
