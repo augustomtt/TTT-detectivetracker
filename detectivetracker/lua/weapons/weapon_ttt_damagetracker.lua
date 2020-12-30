@@ -55,10 +55,7 @@ function SWEP:Initialize()
 		trackedply = nil
 		trackerply = nil
 		attackers = {}
-		hook.Add("TTTEndRound", "finRonda", function(result)
-			hook.remove("EntityTakeDamage","trackUser")
-			hook.remove("TTTEndRound","finRonda")
-		end)
+		table.Empty(attackers)
 	end
 end
 
@@ -73,26 +70,34 @@ function SWEP:PrimaryAttack()
 			--was the detective able to hit the tracker?
 			hook.Add("EntityTakeDamage", "hitDetectiveCheck", function(target, dmginfo)
 				if (IsValid(target) and target:IsPlayer() and dmginfo:IsBulletDamage() and dmginfo:GetAttacker():GetActiveWeapon() == self) then
-					dmginfo:GetAttacker():PrintMessage(HUD_PRINTTALK, "Tracker añadido a: " .. target:GetName())
+					dmginfo:GetAttacker():PrintMessage(HUD_PRINTTALK, "Tracker added to: " .. target:GetName())
 					trackedply = target
 					trackerply = dmginfo:GetAttacker()
-					self:ShootBullet(0, 1, 0.02)
-					timer.Simple(1, function() hook.Add("EntityTakeDamage", "trackUser", function(trackTarget,trackinfo)
-						if (IsPlayer(dmginfo:GetAttacker()) and dmginfo:GetAttacker() ~= target) then
-							table.insert(attackers, trackinfo:GetAttacker())
-						end
-					end) end) --end hook.add and end timer
 				end
+			end)
+			
+			self:ShootBullet(0, 1, 0.02)
+			timer.Simple(1, function() 
+				if (trackedply ~= nil) then
+					table.Empty(attackers)
+					hook.Add("EntityTakeDamage","trackuser", function(trackTarget,trackinfo)
+					if (trackTarget == trackedply and IsPlayer(trackinfo:GetAttacker()) and trackinfo:GetAttacker() ~= target and not table.HasValue(attackers, trackinfo:GetAttacker())) then
+						table.insert(attackers, trackinfo:GetAttacker())	
+					end
+					end)
+				end 
 			end)
 
 			timer.Simple(1, function()
 				hook.Remove("EntityTakeDamage", "hitDetectiveCheck")
 			end)
+
 		end
 	end
 end
 
 function SWEP:SecondaryAttack()
+	PrintTable( hook.GetTable() )
 	if SERVER and (trackedply ~= nil and trackerply ~= nil) and (PlayerWithinBounds(trackerply,trackedply,100)) then
 		if (table.IsEmpty(attackers)) then
 			trackerply:PrintMessage(HUD_PRINTTALK, "This player didn't receive damage from other players")
