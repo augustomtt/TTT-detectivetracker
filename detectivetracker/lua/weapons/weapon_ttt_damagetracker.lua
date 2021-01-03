@@ -77,9 +77,9 @@ function SWEP:PrimaryAttack()
 			end)
 			
 			self:ShootBullet(0, 1, 0.02)
+			table.Empty(attackers)
 			timer.Simple(1, function() 
 				if (trackedply ~= nil) then
-					table.Empty(attackers)
 					hook.Add("EntityTakeDamage","trackuser", function(trackTarget,trackinfo)
 					if (trackTarget == trackedply and IsPlayer(trackinfo:GetAttacker()) and trackinfo:GetAttacker() ~= target and not table.HasValue(attackers, trackinfo:GetAttacker())) then
 						table.insert(attackers, trackinfo:GetAttacker())	
@@ -97,8 +97,10 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	if SERVER and (trackedply ~= nil and trackerply ~= nil) and (PlayerWithinBounds(trackerply,trackedply,100)) then
-		if (table.IsEmpty(attackers)) then
+	if SERVER and (trackedply ~= nil and trackerply ~= nil) and (PlayerWithinBounds(trackerply,trackedply,200)) then
+		if (not trackedply:Alive()) then
+			trackerply:PrintMessage(HUD_PRINTTALK, "The player is dead and the tracker was destroyed")
+		elseif (table.IsEmpty(attackers)) then
 			trackerply:PrintMessage(HUD_PRINTTALK, "This player didn't receive damage from other players")
 		else
 			for i,k in pairs (attackers) do
