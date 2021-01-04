@@ -9,7 +9,9 @@ SWEP.Contact = "https://www.steamcommunity.com/profiles/76561198065084199"
 --
 if SERVER then
   AddCSLuaFile()
+  resource.AddFile("materials/vgui/ttt/icon_det.vmt")
 end
+
 --
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -29,10 +31,11 @@ SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 
 --TODO: change the model
+SWEP.Icon = "vgui/ttt/icon_det"
 SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 
-SWEP.Icon = "vgui/ttt/icon_usp"
+
 SWEP.ShootSound = Sound("buttons/button18.wav")
 SWEP.Weight = 5
 SWEP.AutoSwitchTo = false
@@ -50,7 +53,7 @@ SWEP.AllowDrop = false --this may be buggy
 
 SWEP.EquipMenuData = {
   type = "Equipment",
-  desc = "Left click: Add a tracker to a player  \nRight click: Check if the tracked player has been shot by a player this round"
+  desc = "Left click: Add a tracker to a player  \nRight click: Check if the tracked player has been shot."
 }
 
 function PlayerWithinBounds(ply, otherPly, dist)
