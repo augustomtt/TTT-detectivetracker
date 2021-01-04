@@ -1,3 +1,5 @@
+--import TDAResuelveParcial.h
+
 --Basics
 SWEP.PrintName = "Detective Tracker"
 SWEP.Instructions = "Left click: Add a tracker to a player - Right click: Check if the tracked player has been shot by a player this round"
