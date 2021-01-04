@@ -7,9 +7,12 @@ SWEP.Author = "Angus"
 SWEP.Contact = "https://www.steamcommunity.com/profiles/76561198065084199"
 
 --
+if SERVER then
+  AddCSLuaFile()
+end
+--
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
-
 -- Always derive from weapon_tttbase.
 SWEP.Base = "weapon_tttbase"
 SWEP.Kind = WEAPON_EQUIP1
@@ -28,6 +31,8 @@ SWEP.Secondary.DefaultClip = -1
 --TODO: change the model
 SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
+
+SWEP.Icon = "vgui/ttt/icon_usp"
 SWEP.ShootSound = Sound("buttons/button18.wav")
 SWEP.Weight = 5
 SWEP.AutoSwitchTo = false
@@ -41,11 +46,11 @@ SWEP.AutoSpawnable = false
 SWEP.CanBuy = {ROLE_DETECTIVE}
 
 SWEP.LimitedStock = true
-SWEP.AllowDrop = false --haven't test this yet
+SWEP.AllowDrop = false --this may be buggy
 
 SWEP.EquipMenuData = {
   type = "Equipment",
-  desc = "Left click: Add a tracker to a player - Right click: Check if the tracked player has been shot by a player this round"
+  desc = "Left click: Add a tracker to a player  \nRight click: Check if the tracked player has been shot by a player this round"
 }
 
 function PlayerWithinBounds(ply, otherPly, dist)
